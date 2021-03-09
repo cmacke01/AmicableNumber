@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Amicable Numbers for the Win! </title>
+
+</head>
+
+<body>
+
+  <p>Please input two numbers to see if they are amicable:</p>
+  <form >
+    <input id="numb1">  <br>
+
+    <input id="numb2">  <br>
+    <input type="button" value="Submit" onclick="whenClicked()">
+  </form>
+    <div id="content"> &nbsp; </div>
+
+  <script >
+    function whenClicked() {
+      var x, y;
+
+      x = document.getElementById("numb1").value;
+      y = document.getElementById("numb2").value;
+
+      var factorsOfX = [], factorsOfY = [];
+      //populate arrays with factors of x and y
+      findFactors(x, factorsOfX);
+      findFactors(y, factorsOfY);
+
+      if (areAmicable(x, y, factorsOfX, factorsOfY)){
+        document.getElementById('content').innerHTML = "<div> <br>" + x + ' and ' + y + " are amicable numbers! </div> <br>";
+      } else {
+        document.getElementById('content').innerHTML = "<div> <br>" + x + ' and ' + y + " are not amicable numbers :( </div> <br>";
+      }
+
+      displayAlert(x, y, factorsOfX, factorsOfY);
+
+      return true;
+    }
+
+    function displayAlert(x, y, factorsOfX, factorsOfY){
+      strXFactors = "";
+      strYFactors = "";
+      for (i = 0; i < factorsOfX.length; i++) {
+          strXFactors += factorsOfX[i] + ", ";
+      }
+      //subtract the last comma from str
+      strXFactors = strXFactors.substr(0, strXFactors.length - 2);
+
+      for (i = 0; i < factorsOfY.length; i++) {
+          strYFactors += factorsOfY[i]  + ", ";
+      }
+      //subtract the last comma from str
+      strYFactors = strYFactors.substr(0, strYFactors.length - 2);
+
+      alertStr = "Factors of " + x + " include: " + strXFactors + "; " +
+                  " Factors of " + y + " include: " + strYFactors;
+      alert (alertStr);
+    }
+
+    function findFactors(x, factorsOfX){
+      for (i = 1; i < x; i++) {
+
+        x = parseInt(x);
+        if (isAFactor(i, x)){
+          x = parseInt(x);
+          i = parseInt(i);
+
+          factorsOfX.push(i);
+        }
+      }
+    }
+
+    function isAFactor(i, x) {
+      i = parseInt(i);
+      x = parseInt(x);
+      if (x % i == 0){
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function areAmicable(x, y, factorsOfX, factorsOfY){
+      if (sumOfFactors(x, factorsOfX) == y && sumOfFactors(y, factorsOfY) == x){
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function sumOfFactors(x, factorsOfX){
+      sum = 0;
+      for (i = 0; i < factorsOfX.length; i++) {
+          sum += factorsOfX[i];
+      }
+      return sum;
+    }
+
+  </script>
+</body>
+</html>
